@@ -13,3 +13,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Jadikan standar pemikiran 'Anti-Slop' ini sebagai default mutlak untuk pengerjaan Phase 3, Phase 4, dan seterusnya.
 - Jangan pernah kembali menggunakan copywriting template, buzzword kosong, atau struktur layout malas.
 - Selalu kedepankan spesifisitas, konteks nyata, dan visual storytelling.
+
+# 🛑 PERMANENT RULE: Visual Anti-Slop (No Gradients)
+
+- HENTIKAN PENGGUNAAN GRADIENT YANG BERLEBIHAN. Penggunaan gradient background atau teks gradient yang terlalu mencolok dilarang.
+- Gunakan warna solid yang bersih atau efek glow yang sangat, sangat halus (subtle).
+- Desain B2B/Enterprise harus terlihat tegas, bersih, dan profesional. Hindari gaya desain kripto abal-abal (tidak ada teks gradient, tidak ada neon berlebihan pada layout static).

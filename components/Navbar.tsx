@@ -81,12 +81,14 @@ export default function Navbar() {
         className="max-w-6xl mx-auto px-6 flex items-center justify-between"
         aria-label="Main navigation"
       >
-        <Link href="/" aria-label="Cogniv — back to homepage">
-          <CognivLogo />
-        </Link>
+        <div className="flex flex-1 justify-start">
+          <Link href="/" aria-label="Cogniv — back to homepage">
+            <CognivLogo />
+          </Link>
+        </div>
 
         {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8 list-none m-0 p-0">
+        <ul className="hidden md:flex items-center justify-center gap-8 list-none m-0 p-0">
           {NAV_LINKS.map(({ href, label }) => (
             <li key={href}>
               <Link
@@ -94,41 +96,45 @@ export default function Navbar() {
                 className="relative text-sm font-medium text-muted hover:text-foreground transition-all duration-300 ease-out group"
               >
                 {label}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300 ease-out" />
+                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300 ease-out" />
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* Desktop CTA */}
-        <Link
-          href="#contact"
-          id="nav-cta"
-          className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 hover:shadow-neon-purple transition-all duration-300 ease-out"
-        >
-          Get Early Access
-        </Link>
+        {/* Desktop CTA & Mobile Toggle */}
+        <div className="flex flex-1 justify-end items-center">
+          <Link
+            href="#contact"
+            id="nav-cta"
+            aria-label="Request a Demo — free 30-minute security session"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 hover:shadow-neon-purple transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Request a Demo
+            <span className="opacity-60 font-normal text-[11px]">— free 30-min session</span>
+          </Link>
 
-        {/* Mobile hamburger */}
-        <button
-          id="mobile-menu-toggle"
-          className="md:hidden p-2 rounded-md text-muted hover:text-foreground hover:bg-white/[0.05] transition-all duration-300 ease-out"
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((v) => !v)}
-        >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            {mobileOpen ? (
-              <>
-                <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </>
-            ) : (
-              <>
-                <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </>
-            )}
-          </svg>
-        </button>
+          {/* Mobile hamburger */}
+          <button
+            id="mobile-menu-toggle"
+            className="md:hidden p-2 rounded-md text-muted hover:text-foreground hover:bg-white/[0.05] transition-all duration-300 ease-out"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              {mobileOpen ? (
+                <>
+                  <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </>
+              ) : (
+                <>
+                  <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile drawer */}
@@ -150,9 +156,10 @@ export default function Navbar() {
               <Link
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all duration-300 ease-out"
+                aria-label="Request a Demo — free 30-minute security session"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                Get Early Access
+                Request a Demo
               </Link>
             </li>
           </ul>

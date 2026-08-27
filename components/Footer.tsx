@@ -1,10 +1,6 @@
 import Link from "next/link";
 
-const FOOTER_LINKS = [
-  { href: "#features", label: "Features" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#contact", label: "Contact" },
-] as const;
+
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -26,21 +22,7 @@ export default function Footer() {
           </span>
         </div>
 
-        {/* Links */}
-        <nav aria-label="Footer navigation">
-          <ul className="flex items-center gap-6 list-none m-0 p-0">
-            {FOOTER_LINKS.map(({ href, label }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className="text-xs text-muted hover:text-foreground transition-all duration-300 ease-out"
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+
 
         {/* Copyright */}
         <p className="text-xs text-muted/50">
