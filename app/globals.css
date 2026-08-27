@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+/* ============================================================
+   COGNIV — Design System Tokens (DESIGN.md)
+   Source of Truth: docs/DESIGN.md
+   ============================================================ */
+
+/* --- 1. CSS Custom Properties (Raw Palette) --- */
+:root {
+  /* Background: Deep Space Black #050505 */
+  --background: oklch(12% 0.009 264);
+  /* Foreground: Slate 50 */
+  --foreground: oklch(98% 0 0);
+  /* Primary: Neon Purple #8b5cf6 */
+  --primary: oklch(62% 0.2 293);
+  /* Primary glow (lighter variant for text-gradient) */
+  --primary-light: oklch(75% 0.18 293);
+  /* Secondary: Electric Blue #3b82f6 */
+  --secondary: oklch(65% 0.2 250);
+  /* Secondary glow */
+  --secondary-light: oklch(78% 0.17 250);
+  /* Surface: Card Background */
+  --surface: oklch(14% 0.009 264);
+  /* Muted text */
+  --muted: oklch(55% 0.01 264);
+  /* Border: white/10 */
+  --border: oklch(100% 0 0 / 0.1);
+}
+
+/* --- 2. Tailwind v4 Theme Configuration (@theme) --- */
+@theme inline {
+  /* Color tokens — connected to CSS variables above */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+
+  /* Neon Box Shadows (DESIGN.md §2) */
+  --shadow-neon-purple: 0 0 20px rgba(139, 92, 246, 0.3);
+  --shadow-neon-blue: 0 0 20px rgba(59, 130, 246, 0.3);
+  --shadow-neon-purple-lg: 0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(139, 92, 246, 0.15);
+  --shadow-neon-blue-lg: 0 0 40px rgba(59, 130, 246, 0.4), 0 0 80px rgba(59, 130, 246, 0.15);
+
+  /* Backdrop Blur Extensions (DESIGN.md §2) */
+  --blur-xs: 2px;
+
+  /* Font Variables — set by next/font in layout.tsx */
+  --font-heading: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "Courier New", monospace;
+}
+
+/* --- 3. Global Base Styles --- */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  min-height: 100svh;
+}
+
+/* --- 4. Typography Scale (DESIGN.md §3) --- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+/* --- 5. Selection Color --- */
+::selection {
+  background-color: oklch(62% 0.2 293 / 0.3);
+  color: var(--foreground);
+}
+
+/* --- 6. Scrollbar Styling (minimal, techy) --- */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(62% 0.2 293 / 0.4);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(62% 0.2 293 / 0.7);
+}
