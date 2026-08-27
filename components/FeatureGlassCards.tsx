@@ -5,9 +5,9 @@ const FEATURES = [
     id: "real-time-detection",
     accentColor: "purple",
     stat: "99.97% accuracy",
-    title: "Real-Time Threat Detection",
+    title: "Stop Credential Stuffing & Brute Force",
     description:
-      "AI monitors your traffic 24/7, catching anomalies before they breach. Zero blind spots across all network layers.",
+      "Automatically identify and drop malicious login attempts based on device fingerprinting and behavioral velocity limits.",
     icon: (
       <svg
         width="22"
@@ -78,9 +78,9 @@ const FEATURES = [
     id: "automated-incident-response",
     accentColor: "blue",
     stat: "<200ms block time",
-    title: "Automated Incident Response",
+    title: "Isolate Compromised Endpoints",
     description:
-      "Block malware and isolate compromised endpoints instantly — no human-in-the-loop required. No waiting, no guessing.",
+      "When abnormal outbound traffic is detected, the affected node is instantly quarantined at the network level, preventing lateral movement.",
     icon: (
       <svg
         width="22"
@@ -110,9 +110,9 @@ const FEATURES = [
     id: "zero-trust-architecture",
     accentColor: "mixed",
     stat: "0 implicit trusts",
-    title: "Zero-Trust Architecture",
+    title: "Enforce Strict API Authentication",
     description:
-      "Verify every request, trust no one. Absolute data integrity enforced across every endpoint and access layer.",
+      "Require cryptographically signed tokens for every internal microservice request. No implicit trust, even within the VPC.",
     icon: (
       <svg
         width="22"
@@ -258,7 +258,7 @@ export default function FeatureGlassCards() {
             Built for threats that don&apos;t wait.
           </h2>
           <p className="text-sm text-muted max-w-lg mx-auto leading-relaxed">
-            Three layers of AI-driven protection working in parallel — detection,
+            Three layers of protection working in parallel — detection,
             response, and access control.
           </p>
         </div>
