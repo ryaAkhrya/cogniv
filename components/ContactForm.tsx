@@ -20,7 +20,8 @@ export default function ContactForm() {
     setIsSubmitting(true);
     setErrorMsg(null);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const payload: LeadPayload = {
       company_name: formData.get("company") as string,
       work_email: formData.get("email") as string,
@@ -37,7 +38,7 @@ export default function ContactForm() {
       }
 
       setIsSubmitted(true);
-      e.currentTarget.reset();
+      form.reset();
     } catch (err: any) {
       console.error("Supabase insert error:", err);
       setErrorMsg(

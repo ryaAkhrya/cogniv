@@ -3,18 +3,6 @@
 import Link from "next/link";
 import { useRef } from "react";
 
-/* ─────────────────────────────────────────────
-   QA CHECKLIST (verified before commit)
-   ✅ Headline: problem + persona + outcome, 9 words
-   ✅ Subheadline: mechanism + metric (≤2 sentences)
-   ✅ Primary CTA: "See Dashboard Demo — 90s guided tour"
-   ✅ Secondary CTA: "View Pricing — enterprise plans & SLAs"
-   ✅ All stats: have "— demo data" context string
-   ✅ Badge: no standalone buzzword, each has plain-English gloss
-   ✅ No background element blocking pointer-events
-   ✅ All interactive elements have aria-label + focus-visible ring
-───────────────────────────────────────────── */
-
 function PrimaryCtaButton() {
   const ref = useRef<HTMLAnchorElement>(null);
 
@@ -23,9 +11,9 @@ function PrimaryCtaButton() {
       id="hero-cta-primary"
       ref={ref}
       href="#contact"
-      aria-label="See Dashboard Demo — opens a 90-second guided walkthrough"
+      aria-label="See Dashboard Demo"
       className={[
-        "inline-flex items-center gap-2.5 px-7 py-3.5 rounded-md",
+        "inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md",
         "font-semibold text-sm text-white",
         "transition-all duration-300 ease-out hover:scale-[1.02]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
@@ -41,21 +29,15 @@ function PrimaryCtaButton() {
       }}
     >
       See Dashboard Demo
-      <span className="opacity-70 font-normal text-xs">— 90s guided tour</span>
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
     </Link>
   );
 }
-
-
 
 export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 pt-28 pb-20"
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden px-6 pt-28 pb-20"
       aria-labelledby="hero-headline"
     >
       {/* ── Backgrounds: all pointer-events:none ── */}
@@ -71,7 +53,7 @@ export default function HeroSection() {
       <div
         className="absolute pointer-events-none"
         style={{
-          top: "18%", left: "50%",
+          top: "18%", left: "30%",
           transform: "translate(-50%, -50%)",
           width: "740px", height: "740px",
           background: "radial-gradient(ellipse, rgba(139,92,246,0.11) 0%, transparent 68%)",
@@ -81,7 +63,7 @@ export default function HeroSection() {
       <div
         className="absolute pointer-events-none"
         style={{
-          top: "42%", left: "28%",
+          top: "42%", left: "70%",
           transform: "translate(-50%, -50%)",
           width: "420px", height: "420px",
           background: "radial-gradient(ellipse, rgba(59,130,246,0.07) 0%, transparent 68%)",
@@ -89,117 +71,218 @@ export default function HeroSection() {
         aria-hidden="true"
       />
 
-      {/* ── Content ── */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
+      {/* ── Main Container: 2-Column Asymmetric Layout ── */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        
+        {/* ================= LEFT COLUMN (Copywriting & Actions) ================= */}
+        <div className="flex flex-col text-left">
+          
+          {/* Headline */}
+          <h1
+            id="hero-headline"
+            className="text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-foreground mb-8"
+          >
+            Block API Abuse <span className="text-primary">Before Data Leaves</span> Your Network.
+          </h1>
 
-
-
-        {/* H1: problem + persona + outcome (9 words) */}
-        <h1
-          id="hero-headline"
-          className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.04] text-foreground mb-6 opacity-0 animate-[fadeIn_0.5s_ease-out_forwards]"
-          style={{ animation: 'fadeIn 0.5s ease-out forwards', opacity: 0 }}
-        >
-          Block Unauthorized API Access in{" "}
-          <span className="text-foreground">
-            &lt;200ms
-          </span>
-        </h1>
-
-        {/* Subheadline: mechanism + metric — max 2 sentences */}
-        <p 
-          className="text-base md:text-[17px] text-muted leading-relaxed max-w-2xl mx-auto mb-8 opacity-0 animate-[fadeIn_0.5s_ease-out_0.1s_forwards]"
-          style={{ animation: 'fadeIn 0.5s ease-out 0.1s forwards', opacity: 0, animationFillMode: 'forwards' }}
-        >
-          We inspect packet payloads &amp; flag velocity anomalies to isolate offending endpoints.{" "}
-          <span className="text-foreground/55 block mt-2 font-medium">
-            &lt;200ms block time — demo data
-          </span>
-        </p>
-
-        {/* 3-step mini visual */}
-        <div 
-          className="flex items-center justify-center gap-4 mb-10 opacity-0 animate-[fadeIn_0.5s_ease-out_0.2s_forwards]"
-          style={{ animation: 'fadeIn 0.5s ease-out 0.2s forwards', opacity: 0, animationFillMode: 'forwards' }}
-        >
-          <div className="flex flex-col items-center gap-2">
-             <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-muted">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-             </div>
-             <span className="text-xs font-medium text-muted">Incoming</span>
+          {/* Flow Diagram (Horizontal) */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-10">
+            {/* Box 1 */}
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded bg-white/5 border border-white/10 text-[13px] sm:text-sm font-medium text-muted shrink-0">
+               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+               Incoming API Traffic
+            </div>
+            {/* Dashed line */}
+            <div className="flex-1 min-w-[20px] max-w-[40px] h-[1px] border-t-[1.5px] border-dashed border-primary/50 relative">
+               <div className="absolute right-0 -top-[3.5px] w-1.5 h-1.5 border-t-[1.5px] border-r-[1.5px] border-primary/50 transform rotate-45"></div>
+            </div>
+            {/* Box 2 */}
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded bg-primary/10 border border-primary/30 text-[13px] sm:text-sm font-medium text-primary shrink-0">
+               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+               Cogniv Engine
+            </div>
+            {/* Dashed line */}
+            <div className="flex-1 min-w-[20px] max-w-[40px] h-[1px] border-t-[1.5px] border-dashed border-white/30 relative">
+               <div className="absolute right-0 -top-[3.5px] w-1.5 h-1.5 border-t-[1.5px] border-r-[1.5px] border-white/30 transform rotate-45"></div>
+            </div>
+            {/* Box 3 */}
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded bg-red-500/10 border border-red-500/30 text-[13px] sm:text-sm font-medium text-red-500 shrink-0 mt-3 sm:mt-0">
+               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+               Threat Dropped
+            </div>
           </div>
-          <div className="w-8 sm:w-12 h-[1px] bg-white/20 relative">
-             <div className="absolute right-0 -top-[3px] w-[6px] h-[6px] border-t border-r border-white/40 transform rotate-45"></div>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-             <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-             </div>
-             <span className="text-xs font-medium text-primary">Engine</span>
-          </div>
-          <div className="w-8 sm:w-12 h-[1px] bg-white/20 relative">
-             <div className="absolute right-0 -top-[3px] w-[6px] h-[6px] border-t border-r border-white/40 transform rotate-45"></div>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-             <div className="w-10 h-10 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-500">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
-             </div>
-             <span className="text-xs font-medium text-red-500">Blocked</span>
-          </div>
-        </div>
 
-        {/* CTAs — each states what user gets */}
-        <div 
-          className="flex flex-col items-center justify-center gap-3 mb-16 opacity-0 animate-[scaleIn_0.3s_ease-out_0.3s_forwards]"
-          style={{ animation: 'scaleIn 0.3s ease-out 0.3s forwards', opacity: 0, animationFillMode: 'forwards' }}
-        >
-          <PrimaryCtaButton />
-          {/* Trust microelement */}
-          <div className="text-[11px] text-muted/70 mt-2 font-medium">
-             Used in pilot by top FinTech enterprise (demo data)
+          {/* CTAs */}
+          <div className="flex flex-row flex-wrap items-center gap-4 mb-8">
+            <PrimaryCtaButton />
+            <Link
+              href="#pricing"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md font-semibold text-sm border border-white/20 text-white hover:bg-white/10 transition-all"
+            >
+              View Pricing
+            </Link>
+          </div>
+
+          {/* Micro-proof Badges */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted/90">
+            <div className="flex items-center gap-1.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Typical block time &lt;200ms
+            </div>
+            <div className="flex items-center gap-1.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              99.97% detection rate
+            </div>
+            <div className="flex items-center gap-1.5">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              No hidden fees
+            </div>
           </div>
         </div>
 
+
+        {/* ================= RIGHT COLUMN (Interactive Dashboard Preview) ================= */}
+        <div className="flex flex-col gap-6 w-full">
+          
+          {/* Dashboard Mockup Container */}
+          <div className="relative w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden flex flex-col shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
+            
+            {/* Top Bar (Mock) */}
+            <div className="h-10 bg-black/40 border-b border-white/10 flex items-center px-4 gap-2">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+              </div>
+              <div className="mx-auto w-48 h-4 bg-white/5 rounded-full"></div>
+            </div>
+
+            <div className="flex flex-row h-full">
+              {/* Sidebar */}
+              <div className="w-12 sm:w-14 bg-black/20 border-r border-white/10 flex flex-col items-center py-5 gap-6 text-muted">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-primary"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              </div>
+              
+              {/* Main Interface Area */}
+              <div className="flex-1 p-4 sm:p-5 flex flex-col gap-4">
+                
+                {/* Top Stats (3 Columns) */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                  {/* Card 1: Threats Blocked */}
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 relative overflow-hidden group">
+                    <div className="text-[11px] text-muted mb-1 uppercase tracking-wider font-semibold">Threats Blocked</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-foreground">24,821</div>
+                    <div className="absolute bottom-0 left-0 right-0 h-10 opacity-60">
+                      <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M0 20 Q 15 5, 30 15 T 60 10 T 100 5" strokeLinecap="round" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Card 2: Block Time */}
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 relative overflow-hidden">
+                    <div className="text-[11px] text-muted mb-1 uppercase tracking-wider font-semibold">Block Time</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-foreground">162ms</div>
+                    <div className="absolute bottom-0 left-0 right-0 h-10 opacity-60">
+                      <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full text-secondary" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M0 10 Q 25 20, 50 10 T 100 15" strokeLinecap="round" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Top Attack Type (Donut) */}
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 flex flex-row items-center gap-3">
+                    <div className="flex flex-col flex-1">
+                      <div className="text-[11px] text-muted mb-1 uppercase tracking-wider font-semibold">Top Attack</div>
+                      <div className="text-sm font-semibold text-foreground">Volumetric DDoS</div>
+                    </div>
+                    <div className="w-12 h-12 relative shrink-0">
+                      <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
+                        <path className="text-white/10" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="4" />
+                        <path className="text-primary" strokeDasharray="65, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="4" />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center text-[10px] font-bold">65%</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Area (2 Columns) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full sm:h-44">
+                  
+                  {/* Recent Threats Table */}
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col">
+                    <div className="text-xs font-semibold mb-4 text-foreground/80">Recent Threats</div>
+                    <div className="flex flex-col gap-3">
+                       <div className="flex justify-between items-center text-[11px]">
+                          <span className="font-mono text-muted">192.168.1.104</span>
+                          <span className="text-muted/60 text-[10px]">SQLi</span>
+                          <span className="bg-red-500/20 text-red-500 px-2 py-0.5 rounded text-[10px] border border-red-500/30">Blocked</span>
+                       </div>
+                       <div className="flex justify-between items-center text-[11px]">
+                          <span className="font-mono text-muted">45.22.19.12</span>
+                          <span className="text-muted/60 text-[10px]">Botnet</span>
+                          <span className="bg-red-500/20 text-red-500 px-2 py-0.5 rounded text-[10px] border border-red-500/30">Blocked</span>
+                       </div>
+                       <div className="flex justify-between items-center text-[11px]">
+                          <span className="font-mono text-muted">10.0.0.5</span>
+                          <span className="text-muted/60 text-[10px]">DDoS</span>
+                          <span className="bg-red-500/20 text-red-500 px-2 py-0.5 rounded text-[10px] border border-red-500/30">Blocked</span>
+                       </div>
+                    </div>
+                  </div>
+
+                  {/* Heatmap Area */}
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col relative overflow-hidden">
+                    <div className="text-xs font-semibold mb-1 z-10 text-foreground/80">Traffic Anomaly Heatmap</div>
+                    {/* Fake SVG World Map + Nodes */}
+                    <div className="absolute inset-0 top-8 opacity-40 text-primary pointer-events-none flex items-center justify-center p-2">
+                        <svg viewBox="0 0 100 50" className="w-full h-full fill-current">
+                           <path d="M10,20 Q15,10 20,20 T30,25 T40,20 T50,30 T60,20 T70,15 T80,25 T90,20 L90,40 L10,40 Z" opacity="0.15"/>
+                           {/* Pulsing dots */}
+                           <circle cx="25" cy="22" r="1.5" fill="#ef4444" opacity="0.8" />
+                           <circle cx="55" cy="28" r="1" fill="#ef4444" opacity="0.5" />
+                           <circle cx="75" cy="18" r="2" fill="#ef4444" opacity="0.9" />
+                           <circle cx="40" cy="20" r="1.2" fill="#a855f7" opacity="0.6" />
+                           <circle cx="85" cy="24" r="1" fill="#a855f7" opacity="0.7" />
+                           {/* Connecting lines */}
+                           <path d="M25,22 L40,20 L55,28" stroke="#a855f7" strokeWidth="0.2" fill="none" opacity="0.5"/>
+                           <path d="M55,28 L75,18 L85,24" stroke="#a855f7" strokeWidth="0.2" fill="none" opacity="0.5"/>
+                        </svg>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Trust & Compliance Badges (below dashboard) */}
+          <div className="flex flex-wrap items-center justify-start gap-4 lg:gap-6 text-[13px] text-muted/70 pt-2">
+             <div className="flex items-center gap-1.5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Works at the network layer
+             </div>
+             <div className="flex items-center gap-1.5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                SOC 2 Type II
+             </div>
+             <div className="flex items-center gap-1.5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                GDPR Ready
+             </div>
+             <div className="flex items-center gap-1.5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                ISO 27001 Aligned
+             </div>
+          </div>
+        </div>
 
       </div>
 
-      {/* Anonymized dashboard preview */}
-      <Link
-        href="/demo"
-        className="absolute bottom-12 right-6 md:right-12 z-20 group hidden sm:block opacity-0"
-        aria-label="View Dashboard Demo"
-        style={{ animation: 'fadeIn 0.5s ease-out 0.5s forwards', animationFillMode: 'forwards' }}
-      >
-        <div className="relative p-2 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md shadow-2xl transition-transform duration-300 group-hover:scale-105 group-hover:border-primary/50 overflow-hidden">
-           <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent pointer-events-none"></div>
-           <div className="flex items-center gap-2 mb-2 px-1">
-              <div className="flex gap-1">
-                 <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
-                 <div className="w-2 h-2 rounded-full bg-yellow-500/80"></div>
-                 <div className="w-2 h-2 rounded-full bg-green-500/80"></div>
-              </div>
-              <span className="text-[9px] font-mono text-muted uppercase tracking-wider ml-1">Live Demo</span>
-           </div>
-           {/* Mock Data lines blurred */}
-           <div className="w-48 h-24 bg-white/5 rounded relative overflow-hidden blur-[1px]">
-              <div className="absolute top-2 left-2 w-16 h-3 bg-red-500/40 rounded-sm"></div>
-              <div className="absolute top-8 left-2 w-32 h-2 bg-white/20 rounded-sm"></div>
-              <div className="absolute top-12 left-2 w-24 h-2 bg-white/10 rounded-sm"></div>
-              <div className="absolute bottom-2 left-2 w-full h-8 flex items-end gap-1 px-1">
-                 <div className="w-[15%] h-[30%] bg-primary/40 rounded-t-sm"></div>
-                 <div className="w-[15%] h-[60%] bg-primary/40 rounded-t-sm"></div>
-                 <div className="w-[15%] h-[20%] bg-primary/40 rounded-t-sm"></div>
-                 <div className="w-[15%] h-[100%] bg-red-500/60 rounded-t-sm"></div>
-                 <div className="w-[15%] h-[40%] bg-primary/40 rounded-t-sm"></div>
-              </div>
-           </div>
-           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-[2px]">
-              <span className="bg-primary text-white text-xs px-3 py-1.5 rounded-md font-semibold">Preview Dashboard</span>
-           </div>
-        </div>
-      </Link>
-
-      {/* Bottom fade */}
+      {/* ── Bottom fade ── */}
       <div
         className="absolute bottom-0 inset-x-0 h-44 pointer-events-none"
         style={{ background: "linear-gradient(to top, oklch(12% 0.009 264), transparent)" }}
@@ -208,3 +291,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
