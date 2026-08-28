@@ -135,6 +135,28 @@ h6 {
   to   { opacity: 1; transform: scale(1); }
 }
 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideRight {
+  from { transform: translateX(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  to { transform: translateX(300%); opacity: 0; }
+}
+
+@keyframes driftPrimary {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.03; }
+  100% { transform: translate(50px, 50px) scale(1.1); opacity: 0.05; }
+}
+
+@keyframes driftSecondary {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.03; }
+  100% { transform: translate(-50px, -50px) scale(1.05); opacity: 0.04; }
+}
+
 /* ── Global focus-visible: neon ring consistent with design system ── */
 :focus-visible {
   outline: 2px solid rgba(139, 92, 246, 0.65);

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import FadeInUpWrapper from "@/components/FadeInUpWrapper";
 
 type PricingTier = {
   name: string;
@@ -121,16 +122,16 @@ export default function PricingToggle() {
 
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {TIERS.map((tier) => (
-            <div
-              key={tier.name}
-              className={[
-                "relative rounded-2xl p-8 flex flex-col transition-all duration-300",
-                tier.isPopular 
-                  ? "border border-transparent bg-gradient-to-b from-primary/10 to-transparent bg-origin-border -translate-y-2 shadow-[0_8px_40px_-12px_rgba(139,92,246,0.25)] ring-1 ring-primary/40 scale-[1.02]" 
-                  : "border border-white/[0.05] bg-white/[0.01]",
-              ].join(" ")}
-            >
+          {TIERS.map((tier, idx) => (
+            <FadeInUpWrapper key={tier.name} delay={idx * 150} className={tier.isPopular ? "md:z-10" : "z-0"}>
+              <div
+                className={[
+                  "relative rounded-2xl p-8 flex flex-col transition-all duration-300 ease-out group h-full",
+                  tier.isPopular 
+                    ? "border border-transparent bg-gradient-to-b from-primary/10 to-transparent bg-origin-border -translate-y-2 shadow-[0_8px_40px_-12px_rgba(139,92,246,0.25)] ring-1 ring-primary/40 scale-[1.02] hover:-translate-y-3 hover:shadow-[0_16px_50px_-12px_rgba(139,92,246,0.35)] hover:ring-primary/60" 
+                    : "border border-white/[0.05] bg-white/[0.01] hover:-translate-y-1 hover:border-white/[0.15] hover:bg-white/[0.03] hover:shadow-[0_12px_30px_-10px_rgba(0,0,0,0.5)]",
+                ].join(" ")}
+              >
               <div className="mb-6">
                 <h3 className="text-xl font-semibold text-foreground mb-2">
                   {tier.name}
@@ -200,6 +201,7 @@ export default function PricingToggle() {
                 {tier.ctaText}
               </Link>
             </div>
+            </FadeInUpWrapper>
           ))}
         </div>
       </div>

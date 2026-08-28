@@ -1,7 +1,62 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+
+const ROTATING_WORDS = [
+  "API Abuse",
+  "Credential Stuffing",
+  "Data Exfiltration",
+  "Token Hijacking",
+];
+
+function TypewriterHeadline() {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = ROTATING_WORDS[wordIndex];
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    if (isDeleting) {
+      if (text === "") {
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+      } else {
+        timeoutId = setTimeout(() => {
+          setText(currentWord.substring(0, text.length - 1));
+        }, 50);
+      }
+    } else {
+      if (text === currentWord) {
+        timeoutId = setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+      } else {
+        timeoutId = setTimeout(() => {
+          setText(currentWord.substring(0, text.length + 1));
+        }, 100);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [text, isDeleting, wordIndex]);
+
+  return (
+    <h1
+      id="hero-headline"
+      className="text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-foreground mb-8 flex flex-col"
+    >
+      <span className="inline-block min-h-[1.2em]">
+        Block {text}<span className="animate-pulse font-light ml-[2px]">|</span>
+      </span>
+      <span className="inline-block mt-2">
+        <span className="text-primary">Before Data Leaves</span> Your Network.
+      </span>
+    </h1>
+  );
+}
 
 function PrimaryCtaButton() {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -34,6 +89,39 @@ function PrimaryCtaButton() {
 }
 
 export default function HeroSection() {
+  const [threatsBlocked, setThreatsBlocked] = useState(24821);
+  const [recentThreats, setRecentThreats] = useState([
+    { ip: "192.168.1.104", type: "SQLi" },
+    { ip: "45.22.19.12", type: "Botnet" },
+    { ip: "10.0.0.5", type: "DDoS" },
+  ]);
+
+  useEffect(() => {
+    const counterInterval = setInterval(() => {
+      setThreatsBlocked((prev) => prev + Math.floor(Math.random() * 3) + 1);
+    }, Math.floor(Math.random() * 2000) + 3000);
+
+    const possibleThreats = [
+      { ip: "172.16.0.4", type: "XSS" },
+      { ip: "8.8.4.4", type: "Brute Force" },
+      { ip: "104.21.5.11", type: "DDoS" },
+      { ip: "192.168.0.1", type: "SQLi" },
+      { ip: "10.10.10.1", type: "Botnet" }
+    ];
+
+    const feedInterval = setInterval(() => {
+      setRecentThreats((prev) => {
+        const newThreat = possibleThreats[Math.floor(Math.random() * possibleThreats.length)];
+        return [newThreat, prev[0], prev[1]];
+      });
+    }, 4500);
+
+    return () => {
+      clearInterval(counterInterval);
+      clearInterval(feedInterval);
+    };
+  }, []);
+
   return (
     <section
       id="hero"
@@ -41,35 +129,44 @@ export default function HeroSection() {
       aria-labelledby="hero-headline"
     >
       {/* ── Backgrounds: all pointer-events:none ── */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(rgba(139,92,246,0.055) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(139,92,246,0.055) 1px, transparent 1px)`,
-          backgroundSize: "64px 64px",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: "18%", left: "30%",
-          transform: "translate(-50%, -50%)",
-          width: "740px", height: "740px",
-          background: "radial-gradient(ellipse, rgba(139,92,246,0.11) 0%, transparent 68%)",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: "42%", left: "70%",
-          transform: "translate(-50%, -50%)",
-          width: "420px", height: "420px",
-          background: "radial-gradient(ellipse, rgba(59,130,246,0.07) 0%, transparent 68%)",
-        }}
-        aria-hidden="true"
-      />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[-1]">
+        {/* Grid Pattern */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `linear-gradient(rgba(139,92,246,0.055) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(139,92,246,0.055) 1px, transparent 1px)`,
+            backgroundSize: "64px 64px",
+          }}
+          aria-hidden="true"
+        />
+        
+        {/* Static Highlights */}
+        <div
+          className="absolute"
+          style={{
+            top: "18%", left: "30%",
+            transform: "translate(-50%, -50%)",
+            width: "740px", height: "740px",
+            background: "radial-gradient(ellipse, rgba(139,92,246,0.11) 0%, transparent 68%)",
+          }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute"
+          style={{
+            top: "42%", left: "70%",
+            transform: "translate(-50%, -50%)",
+            width: "420px", height: "420px",
+            background: "radial-gradient(ellipse, rgba(59,130,246,0.07) 0%, transparent 68%)",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Ambient Lights (Animated) */}
+        <div className="absolute top-[10%] left-[20%] w-[50vw] h-[50vw] bg-primary rounded-full blur-[120px] opacity-[0.03] will-change-transform animate-[driftPrimary_15s_ease-in-out_infinite_alternate]" />
+        <div className="absolute bottom-[10%] right-[20%] w-[40vw] h-[40vw] bg-secondary rounded-full blur-[120px] opacity-[0.03] will-change-transform animate-[driftSecondary_20s_ease-in-out_infinite_alternate]" />
+      </div>
 
       {/* ── Main Container: 2-Column Asymmetric Layout ── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -78,12 +175,7 @@ export default function HeroSection() {
         <div className="flex flex-col text-left">
           
           {/* Headline */}
-          <h1
-            id="hero-headline"
-            className="text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-foreground mb-8"
-          >
-            Block API Abuse <span className="text-primary">Before Data Leaves</span> Your Network.
-          </h1>
+          <TypewriterHeadline />
 
           {/* Flow Diagram (Horizontal) */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-10">
@@ -93,8 +185,9 @@ export default function HeroSection() {
                Incoming API Traffic
             </div>
             {/* Dashed line */}
-            <div className="flex-1 min-w-[20px] max-w-[40px] h-[1px] border-t-[1.5px] border-dashed border-primary/50 relative">
+            <div className="flex-1 min-w-[20px] max-w-[40px] h-[1px] border-t-[1.5px] border-dashed border-primary/50 relative overflow-hidden">
                <div className="absolute right-0 -top-[3.5px] w-1.5 h-1.5 border-t-[1.5px] border-r-[1.5px] border-primary/50 transform rotate-45"></div>
+               <div className="absolute left-0 -top-[2.5px] w-4 h-1 bg-primary blur-[2px] animate-[slideRight_2s_linear_infinite]"></div>
             </div>
             {/* Box 2 */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded bg-primary/10 border border-primary/30 text-[13px] sm:text-sm font-medium text-primary shrink-0">
@@ -102,8 +195,9 @@ export default function HeroSection() {
                Cogniv Engine
             </div>
             {/* Dashed line */}
-            <div className="flex-1 min-w-[20px] max-w-[40px] h-[1px] border-t-[1.5px] border-dashed border-white/30 relative">
+            <div className="flex-1 min-w-[20px] max-w-[40px] h-[1px] border-t-[1.5px] border-dashed border-white/30 relative overflow-hidden">
                <div className="absolute right-0 -top-[3.5px] w-1.5 h-1.5 border-t-[1.5px] border-r-[1.5px] border-white/30 transform rotate-45"></div>
+               <div className="absolute left-0 -top-[2.5px] w-4 h-1 bg-white/50 blur-[2px] animate-[slideRight_2s_linear_infinite]" style={{ animationDelay: '1s' }}></div>
             </div>
             {/* Box 3 */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded bg-red-500/10 border border-red-500/30 text-[13px] sm:text-sm font-medium text-red-500 shrink-0 mt-3 sm:mt-0">
@@ -117,7 +211,7 @@ export default function HeroSection() {
             <PrimaryCtaButton />
             <Link
               href="#pricing"
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md font-semibold text-sm border border-white/20 text-white hover:bg-white/10 transition-all"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md font-semibold text-sm border border-white/20 text-white hover:bg-white/10 transition-all duration-300 ease-out"
             >
               View Pricing
             </Link>
@@ -148,13 +242,17 @@ export default function HeroSection() {
           <div className="relative w-full rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden flex flex-col shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
             
             {/* Top Bar (Mock) */}
-            <div className="h-10 bg-black/40 border-b border-white/10 flex items-center px-4 gap-2">
-              <div className="flex gap-1.5">
+            <div className="h-10 bg-black/40 border-b border-white/10 flex items-center px-4 justify-between">
+              <div className="flex gap-1.5 w-16">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
               </div>
-              <div className="mx-auto w-48 h-4 bg-white/5 rounded-full"></div>
+              <div className="h-4 bg-white/5 rounded-full flex-1 max-w-48 mx-auto"></div>
+              <div className="flex items-center justify-end gap-1.5 w-16">
+                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                 <span className="text-[9px] text-muted font-medium uppercase tracking-wider">Live</span>
+              </div>
             </div>
 
             <div className="flex flex-row h-full">
@@ -174,7 +272,9 @@ export default function HeroSection() {
                   {/* Card 1: Threats Blocked */}
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 relative overflow-hidden group">
                     <div className="text-[11px] text-muted mb-1 uppercase tracking-wider font-semibold">Threats Blocked</div>
-                    <div className="text-2xl sm:text-3xl font-bold text-foreground">24,821</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-foreground" suppressHydrationWarning>
+                       {threatsBlocked.toLocaleString("en-US")}
+                    </div>
                     <div className="absolute bottom-0 left-0 right-0 h-10 opacity-60">
                       <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
                         <path d="M0 20 Q 15 5, 30 15 T 60 10 T 100 5" strokeLinecap="round" />
@@ -216,21 +316,13 @@ export default function HeroSection() {
                   <div className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col">
                     <div className="text-xs font-semibold mb-4 text-foreground/80">Recent Threats</div>
                     <div className="flex flex-col gap-3">
-                       <div className="flex justify-between items-center text-[11px]">
-                          <span className="font-mono text-muted">192.168.1.104</span>
-                          <span className="text-muted/60 text-[10px]">SQLi</span>
-                          <span className="bg-red-500/20 text-red-500 px-2 py-0.5 rounded text-[10px] border border-red-500/30">Blocked</span>
-                       </div>
-                       <div className="flex justify-between items-center text-[11px]">
-                          <span className="font-mono text-muted">45.22.19.12</span>
-                          <span className="text-muted/60 text-[10px]">Botnet</span>
-                          <span className="bg-red-500/20 text-red-500 px-2 py-0.5 rounded text-[10px] border border-red-500/30">Blocked</span>
-                       </div>
-                       <div className="flex justify-between items-center text-[11px]">
-                          <span className="font-mono text-muted">10.0.0.5</span>
-                          <span className="text-muted/60 text-[10px]">DDoS</span>
-                          <span className="bg-red-500/20 text-red-500 px-2 py-0.5 rounded text-[10px] border border-red-500/30">Blocked</span>
-                       </div>
+                       {recentThreats.map((threat, idx) => (
+                         <div key={`${threat.ip}-${idx}`} className="flex justify-between items-center text-[11px] animate-[fadeInUp_0.3s_ease-out_forwards]">
+                            <span className="font-mono text-muted">{threat.ip}</span>
+                            <span className="text-muted/60 text-[10px]">{threat.type}</span>
+                            <span className="bg-red-500/20 text-red-500 px-2 py-0.5 rounded text-[10px] border border-red-500/30">Blocked</span>
+                         </div>
+                       ))}
                     </div>
                   </div>
 

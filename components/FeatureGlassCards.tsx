@@ -1,4 +1,5 @@
 "use client";
+import FadeInUpWrapper from "@/components/FadeInUpWrapper";
 
 /* ─────────────────────────────────────────────
    QA CHECKLIST
@@ -89,13 +90,13 @@ function FeatureCard({
   return (
     <article
       id={`feature-${id}`}
-      className="group relative rounded-2xl p-6 flex flex-col gap-4 cursor-default transition-all duration-300 ease-out"
+      className="group relative rounded-2xl p-6 flex flex-col gap-4 cursor-default transition-all duration-300 ease-out hover:-translate-y-1"
       style={{
         background: "rgba(255,255,255,0.03)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         border: "1px solid rgba(255,255,255,0.08)",
-        boxShadow: "none",
+        boxShadow: "0 0 0 rgba(0,0,0,0)",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement;
@@ -106,7 +107,7 @@ function FeatureCard({
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement;
         el.style.borderColor = "rgba(255,255,255,0.08)";
-        el.style.boxShadow = "none";
+        el.style.boxShadow = "0 0 0 rgba(0,0,0,0)";
         el.style.background = "rgba(255,255,255,0.03)";
       }}
     >
@@ -172,8 +173,10 @@ export default function FeatureGlassCards() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          {FEATURES.map((feature) => (
-            <FeatureCard key={feature.id} {...feature} />
+          {FEATURES.map((feature, idx) => (
+            <FadeInUpWrapper key={feature.id} delay={idx * 150}>
+               <FeatureCard {...feature} />
+            </FadeInUpWrapper>
           ))}
         </div>
       </div>
