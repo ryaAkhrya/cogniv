@@ -4,7 +4,7 @@ A modern cybersecurity SaaS portfolio project featuring a production-style lead 
 
 ### Live Demo
 
-**https://cogniv.yudisworks.my.id**
+**https://cogniv-xi.vercel.app/**
 
 > Cogniv is a portfolio/demo project. The cybersecurity dashboard and threat-related visuals are presentation UI and do not perform real threat detection or security enforcement.
 
