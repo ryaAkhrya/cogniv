@@ -151,7 +151,9 @@ const baseDictionary = {
       submitting: "Sending...",
       successHeading: "Request Received",
       successBody:
-        "An engineer will reach out to your work email within 24 hours.",
+        "Your demo request has been recorded. Check your work email for confirmation.",
+      successBodyFallback:
+        "Your demo request has been recorded successfully.",
       errorFallback: "Failed to submit your request. Please try again later.",
       secureNote: "No credit card required. Secure SSL connection.",
     },
@@ -318,7 +320,9 @@ const baseDictionary = {
       submitting: "Mengirim...",
       successHeading: "Permintaan Diterima",
       successBody:
-        "Engineer kami akan menghubungi email kerja Anda dalam 24 jam.",
+        "Permintaan demo Anda telah tercatat. Periksa email kerja Anda untuk konfirmasi.",
+      successBodyFallback:
+        "Permintaan demo Anda telah berhasil tercatat.",
       errorFallback: "Gagal mengirim permintaan Anda. Silakan coba lagi nanti.",
       secureNote: "Tanpa kartu kredit. Koneksi SSL aman.",
     },

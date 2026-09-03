@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/utils/supabase/client";
 import { useLang } from "@/utils/i18n/LanguageContext";
 
 interface LeadPayload {
@@ -15,6 +14,7 @@ export default function ContactForm() {
   const { t } = useLang();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [emailSent, setEmailSent] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,18 +32,27 @@ export default function ContactForm() {
     };
 
     try {
-      const { error } = await supabase.from("leads").insert([payload]);
+      const res = await fetch("/api/demo-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-      if (error) {
-        throw new Error(error.message);
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to submit demo request.");
       }
 
       setIsSubmitted(true);
+      setEmailSent(data.emailSent !== false); // default to true if missing
       form.reset();
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : t.contact.errorFallback;
-      console.error("Supabase insert error:", err);
+      console.error("API submit error:", err);
       setErrorMsg(message || t.contact.errorFallback);
     } finally {
       setIsSubmitting(false);
@@ -84,7 +93,9 @@ export default function ContactForm() {
               <h3 className="text-xl font-medium text-foreground mb-2">
                 {t.contact.successHeading}
               </h3>
-              <p className="text-sm text-muted">{t.contact.successBody}</p>
+              <p className="text-sm text-muted">
+                {emailSent ? t.contact.successBody : t.contact.successBodyFallback}
+              </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
