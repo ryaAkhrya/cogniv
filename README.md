@@ -1,117 +1,156 @@
 # Cogniv
 
-A modern cybersecurity SaaS landing page focused on threat protection, security visibility, and lead generation.
+A modern cybersecurity SaaS portfolio project featuring a production-style lead acquisition flow, bilingual interface, Supabase integration, and transactional email confirmation.
 
-Cogniv is a portfolio project built to demonstrate a production-ready marketing website with responsive UI, bilingual support, persistent user preferences, and Supabase-powered lead capture.
+### Live Demo
+
+**https://cogniv.yudisworks.my.id**
+
+> Cogniv is a portfolio/demo project. The cybersecurity dashboard and threat-related visuals are presentation UI and do not perform real threat detection or security enforcement.
+
+IMPORTANT:
+- Do NOT modify application code.
+- Modify README.md only.
+- Do NOT exaggerate Cogniv as a real cybersecurity engine.
+- Cogniv is a portfolio/demo cybersecurity SaaS website, not an actual threat-detection or security platform.
+- Keep the README professional, concise, and suitable for a GitHub portfolio.
+- Do not use excessive badges, emojis, marketing fluff, or AI-generated sounding language.
+- Do not expose API keys, environment values, Supabase credentials, or other secrets.
+- Do not run lint, TypeScript, or build.
+- Do not commit or push.
+
+Current architecture/features that README should accurately document:
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- Responsive cybersecurity SaaS interface
+- English / Indonesian localization
+- Persistent language preference
+- Interactive cybersecurity dashboard visualization/mockup
+- Pricing section with billing toggle
+- Request Demo lead form
+- Server-side POST /api/demo-request endpoint
+- Server-side payload validation
+- Supabase lead storage
+- Supabase Row Level Security (RLS)
+- Resend transactional email confirmation
+- Verified Cogniv sending domain
+- Confirmation email sent to the submitted Work Email
+- Graceful handling when email delivery fails after lead storage
+- Reduced-motion accessibility support
+- Responsive navigation
+- Custom Cogniv branding/favicon
+- Vercel deployment
+
+The Request Demo architecture is:
+
+Browser ContactForm
+→ POST /api/demo-request
+→ server-side validation
+→ Supabase lead insert
+→ Resend confirmation email
+→ success response
+
+Important failure behavior:
+- If Supabase insert fails, submission fails and no email is sent.
+- If Supabase succeeds but Resend fails, the lead remains stored and the request is still considered successful.
+- RESEND_API_KEY is server-only.
+
+Update the README structure to something approximately like:
+
+# Cogniv
+
+Short project description.
+
+Clearly state that Cogniv is a portfolio project demonstrating a production-style SaaS marketing website and lead acquisition workflow.
 
 ## Features
 
-- Responsive cybersecurity SaaS landing page
-- English & Indonesian localization
-- Persistent language preference
-- Interactive cybersecurity dashboard visualization
-- Animated threat/typewriter presentation
-- Pricing section with billing toggle
-- Contact / lead capture form
-- Supabase integration for lead storage
-- Reduced-motion accessibility support
-- Responsive navigation
-- Custom Cogniv branding and favicon
-- Dark cybersecurity-focused interface
+Include the actual current features.
+
+## Request Demo Flow
+
+Briefly explain the server-side lead + email architecture.
+
+Use a simple text/code flow such as:
+
+Contact Form
+    ↓
+POST /api/demo-request
+    ↓
+Server Validation
+    ↓
+Supabase
+    ↓
+Resend Confirmation Email
+
+Do not make this diagram unnecessarily complicated.
 
 ## Tech Stack
 
-- Next.js 16
+Document:
+- Next.js
 - React
 - TypeScript
 - Tailwind CSS
 - Supabase
-- ESLint
+- Resend
 - Vercel
 
-## Architecture
+## Environment Variables
 
-The project uses the Next.js App Router with reusable React components.
+Document ONLY variable names, never values:
 
-Main structure:
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+RESEND_API_KEY
 
-```text
-app/
-├── layout.tsx
-├── page.tsx
-├── globals.css
-└── icon.svg
+Explain that `.env.local` must not be committed.
 
-components/
-├── Navbar.tsx
-├── HeroSection.tsx
-├── FeatureGlassCards.tsx
-├── PricingToggle.tsx
-├── ContactForm.tsx
-├── Footer.tsx
-└── FadeInUpWrapper.tsx
+Do not document RESEND_TO_EMAIL if it is only used by the temporary test endpoint; instead mention the temporary test endpoint separately if necessary.
 
-utils/
-├── i18n/
-│   ├── dictionary.ts
-│   └── LanguageContext.tsx
-└── supabase/
-    └── client.ts
-Localization
+## Local Development
 
-Cogniv supports:
-
-English (default)
-Indonesian
-
-The selected language is persisted locally so the user's preference remains available after refreshing the page.
-
-Supabase
-
-Supabase is used for lead capture through the contact form.
-
-Required environment variables:
-
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-Never commit .env.local or private Supabase credentials to the repository.
-
-Getting Started
-
-Clone the repository:
-
-git clone <YOUR_REPOSITORY_URL>
-cd cogniv
-
-Install dependencies:
+Include concise setup:
 
 npm install
 
-Create .env.local and configure the required Supabase environment variables.
-
-Start the development server:
+create .env.local
 
 npm run dev
 
-Then open http://localhost:3000.
+Do not include real credentials.
 
-Quality Checks
-npx tsc --noEmit
-npm run lint
-npm run build
-Deployment
+## Security Notes
 
-The project is designed to be deployed on Vercel.
+Briefly mention:
+- Supabase RLS
+- server-side Resend API key
+- server-side validation
+- no sensitive environment values returned to client
+- client does not directly send transactional email
 
-Remember to configure the same environment variables used locally in the Vercel project settings.
+Do not claim the application itself provides actual cybersecurity protection.
 
-Project Status
+## Project Scope
 
-Cogniv is a portfolio project demonstrating frontend architecture, responsive SaaS UI, localization, accessibility considerations, and Supabase integration.
+Explicitly clarify:
 
-The cybersecurity dashboard and threat-monitoring visuals are interface demonstrations and do not represent a real threat-detection engine.
+The cybersecurity dashboard and threat-related visuals are presentation/demo UI. Cogniv does not currently perform real threat detection, traffic inspection, malware analysis, or automated security enforcement.
 
-License
+This is important so the portfolio remains technically honest.
 
-This project is intended for portfolio and demonstration purposes.
+## Deployment
+
+Mention Vercel deployment and required production environment variables.
+
+If the README currently contains still-accurate useful information, preserve it rather than rewriting blindly.
+
+Remove or rewrite outdated statements implying that Request Demo is only a direct client-side Supabase insert.
+
+After editing, report:
+1. Sections updated
+2. Outdated information removed
+3. New architecture documentation added
+4. Confirm README.md was the only file modified
