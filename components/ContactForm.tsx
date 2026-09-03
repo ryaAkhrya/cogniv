@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase } from "@/utils/supabase/client";
+import { useLang } from "@/utils/i18n/LanguageContext";
 
 interface LeadPayload {
   company_name: string;
@@ -11,6 +12,7 @@ interface LeadPayload {
 }
 
 export default function ContactForm() {
+  const { t } = useLang();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -30,20 +32,19 @@ export default function ContactForm() {
     };
 
     try {
-      // Send payload to Supabase 'leads' table
       const { error } = await supabase.from("leads").insert([payload]);
-      
+
       if (error) {
         throw new Error(error.message);
       }
 
       setIsSubmitted(true);
       form.reset();
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : t.contact.errorFallback;
       console.error("Supabase insert error:", err);
-      setErrorMsg(
-        err.message || "Failed to submit your request. Please try again later."
-      );
+      setErrorMsg(message || t.contact.errorFallback);
     } finally {
       setIsSubmitting(false);
     }
@@ -61,11 +62,9 @@ export default function ContactForm() {
             id="contact-heading"
             className="text-3xl font-semibold tracking-tight text-foreground mb-3"
           >
-            Talk to Our Security Engineers
+            {t.contact.heading}
           </h2>
-          <p className="text-sm text-muted">
-            See how Cogniv fits your architecture. Get a custom demo tailored to your tech stack.
-          </p>
+          <p className="text-sm text-muted">{t.contact.subheading}</p>
         </div>
 
         <div className="bg-white/[0.02] border border-white/[0.08] rounded-2xl p-6 sm:p-8 backdrop-blur-md">
@@ -82,37 +81,37 @@ export default function ContactForm() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium text-foreground mb-2">Request Received</h3>
-              <p className="text-sm text-muted">
-                An engineer will reach out to your work email within 24 hours.
-              </p>
+              <h3 className="text-xl font-medium text-foreground mb-2">
+                {t.contact.successHeading}
+              </h3>
+              <p className="text-sm text-muted">{t.contact.successBody}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <div className="flex flex-col sm:flex-row gap-5">
                 <div className="flex flex-col gap-2 flex-1">
                   <label htmlFor="company" className="text-sm font-medium text-foreground/90">
-                    Company Name
+                    {t.contact.labelCompany}
                   </label>
                   <input
                     id="company"
                     name="company"
                     type="text"
                     required
-                    placeholder="Acme Corp"
+                    placeholder={t.contact.placeholderCompany}
                     className="w-full bg-black/40 border border-white/[0.12] rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted/40 transition-colors focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/60"
                   />
                 </div>
                 <div className="flex flex-col gap-2 flex-1">
                   <label htmlFor="email" className="text-sm font-medium text-foreground/90">
-                    Work Email
+                    {t.contact.labelEmail}
                   </label>
                   <input
                     id="email"
                     name="email"
                     type="email"
                     required
-                    placeholder="name@company.com"
+                    placeholder={t.contact.placeholderEmail}
                     className="w-full bg-black/40 border border-white/[0.12] rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted/40 transition-colors focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/60"
                   />
                 </div>
@@ -120,7 +119,7 @@ export default function ContactForm() {
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="useCase" className="text-sm font-medium text-foreground/90">
-                  Primary Use Case
+                  {t.contact.labelUseCase}
                 </label>
                 <div className="relative">
                   <select
@@ -130,11 +129,14 @@ export default function ContactForm() {
                     defaultValue=""
                     className="w-full bg-black/40 border border-white/[0.12] rounded-md px-4 py-2.5 text-sm text-foreground appearance-none transition-colors focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/60"
                   >
-                    <option value="" disabled className="text-muted/40">Select an option...</option>
-                    <option value="api-protection">API Protection & Rate Limiting</option>
-                    <option value="network-quarantine">Automated Network Quarantine</option>
-                    <option value="compliance-audit">Compliance & Audit Logging</option>
-                    <option value="other">Other / General Inquiry</option>
+                    <option value="" disabled className="text-muted/40">
+                      {t.contact.placeholderSelect}
+                    </option>
+                    {t.contact.useCases.map((uc) => (
+                      <option key={uc.value} value={uc.value}>
+                        {uc.label}
+                      </option>
+                    ))}
                   </select>
                   <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-muted/60">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -146,13 +148,14 @@ export default function ContactForm() {
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="message" className="text-sm font-medium text-foreground/90">
-                  Additional Context <span className="text-muted/50 font-normal">(Optional)</span>
+                  {t.contact.labelMessage}{" "}
+                  <span className="text-muted/50 font-normal">{t.contact.labelMessageOptional}</span>
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   rows={3}
-                  placeholder="Tell us about your current infrastructure or specific challenges..."
+                  placeholder={t.contact.placeholderMessage}
                   className="w-full bg-black/40 border border-white/[0.12] rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted/40 transition-colors focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/60 resize-none"
                 />
               </div>
@@ -174,7 +177,7 @@ export default function ContactForm() {
                   {isSubmitting ? (
                     <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
                   ) : (
-                    "Request Demo"
+                    t.contact.submit
                   )}
                 </button>
                 <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-muted/60 font-mono">
@@ -182,7 +185,7 @@ export default function ContactForm() {
                     <rect x="5" y="11" width="14" height="11" rx="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M7 11V7a5 5 0 0110 0v4" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  No credit card required. Secure SSL connection.
+                  {t.contact.secureNote}
                 </div>
               </div>
             </form>

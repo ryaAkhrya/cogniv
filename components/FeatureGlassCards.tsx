@@ -1,5 +1,6 @@
 "use client";
 import FadeInUpWrapper from "@/components/FadeInUpWrapper";
+import { useLang } from "@/utils/i18n/LanguageContext";
 
 /* ─────────────────────────────────────────────
    QA CHECKLIST
@@ -9,14 +10,10 @@ import FadeInUpWrapper from "@/components/FadeInUpWrapper";
    ✅ All hover states consistent: same timing, same structure
 ───────────────────────────────────────────── */
 
-const FEATURES = [
+const CARD_META = [
   {
     id: "credential-stuffing",
     accentColor: "purple" as const,
-    title: "Stop Credential Stuffing in Under 5 Minutes",
-    description:
-      "Detects automated login attacks using device fingerprinting and per-IP velocity limits, then drops the session before the token exchange completes.",
-    proof: "Blocked 14M attempts during PoC (Mar–Apr 2026) — demo data",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
         <circle cx="12" cy="8" r="4" />
@@ -28,10 +25,6 @@ const FEATURES = [
   {
     id: "isolate-endpoints",
     accentColor: "blue" as const,
-    title: "Isolate Compromised Endpoints Instantly",
-    description:
-      "When abnormal outbound traffic is detected — e.g., a node sending data to an unknown external IP — it is quarantined at the network layer to prevent lateral movement.",
-    proof: "<200ms quarantine time — demo data",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -42,10 +35,6 @@ const FEATURES = [
   {
     id: "signed-token-auth",
     accentColor: "mixed" as const,
-    title: "Enforce Signed Tokens on Every Internal Request",
-    description:
-      "Every microservice call inside the VPC must carry a cryptographically signed token — zero-trust means verifying every request, even internal ones, not just the perimeter.",
-    proof: "0 unauthorized internal access events — demo data",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
         <rect x="5" y="11" width="14" height="11" rx="2" />
@@ -79,12 +68,19 @@ const GLOW: Record<"purple" | "blue" | "mixed", { border: string; shadow: string
 
 function FeatureCard({
   id,
+  icon,
+  accentColor,
   title,
   description,
   proof,
-  icon,
-  accentColor,
-}: (typeof FEATURES)[number]) {
+}: {
+  id: string;
+  icon: React.ReactNode;
+  accentColor: "purple" | "blue" | "mixed";
+  title: string;
+  description: string;
+  proof: string;
+}) {
   const glow = GLOW[accentColor];
 
   return (
@@ -111,8 +107,6 @@ function FeatureCard({
         el.style.background = "rgba(255,255,255,0.03)";
       }}
     >
-
-
       {/* Icon */}
       <div
         className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 ease-out"
@@ -141,6 +135,8 @@ function FeatureCard({
 }
 
 export default function FeatureGlassCards() {
+  const { t } = useLang();
+
   return (
     <section
       id="features"
@@ -159,25 +155,35 @@ export default function FeatureGlassCards() {
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-[10px] font-mono font-medium uppercase tracking-[0.18em] text-primary/60 mb-3">
-            Core Capabilities
+            {t.features.eyebrow}
           </p>
           <h2
             id="features-heading"
             className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-4"
           >
-            Three layers that contain a breach — not just detect one.
+            {t.features.heading}
           </h2>
           <p className="text-sm text-muted max-w-md mx-auto leading-relaxed">
-            Detection, quarantine, and access control running in parallel — each layer reports to a single audit log.
+            {t.features.subheading}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          {FEATURES.map((feature, idx) => (
-            <FadeInUpWrapper key={feature.id} delay={idx * 150}>
-               <FeatureCard {...feature} />
-            </FadeInUpWrapper>
-          ))}
+          {CARD_META.map((meta, idx) => {
+            const card = t.features.cards[idx];
+            return (
+              <FadeInUpWrapper key={meta.id} delay={idx * 150}>
+                <FeatureCard
+                  id={meta.id}
+                  icon={meta.icon}
+                  accentColor={meta.accentColor}
+                  title={card.title}
+                  description={card.description}
+                  proof={card.proof}
+                />
+              </FadeInUpWrapper>
+            );
+          })}
         </div>
       </div>
     </section>

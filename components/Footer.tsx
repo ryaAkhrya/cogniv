@@ -1,8 +1,9 @@
-import Link from "next/link";
+"use client";
 
-
+import { useLang } from "@/utils/i18n/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLang();
   const year = new Date().getFullYear();
 
   return (
@@ -17,17 +18,11 @@ export default function Footer() {
             Cogniv
           </span>
           <span className="text-muted/40 text-xs">—</span>
-          <span className="text-xs text-muted/60">
-            Digital Safety First. AI-Powered Security.
-          </span>
+          <span className="text-xs text-muted/60">{t.footer.tagline}</span>
         </div>
 
-
-
         {/* Copyright */}
-        <p className="text-xs text-muted/50">
-          &copy; {year} Cogniv. All rights reserved.
-        </p>
+        <p className="text-xs text-muted/50">{t.footer.copyright(year)}</p>
       </div>
     </footer>
   );
